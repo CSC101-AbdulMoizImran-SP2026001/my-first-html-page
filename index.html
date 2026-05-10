@@ -1,60 +1,327 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My First HTML Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Personal Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f5f0e8;
+      --card: #ffffff;
+      --ink: #1a1a2e;
+      --accent: #c0392b;
+      --accent2: #2c3e7a;
+      --muted: #6b6b7b;
+      --border: #d4cfc6;
+      --shadow: 0 4px 24px rgba(26,26,46,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--accent2);
+      color: #fff;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .hero {
+      background: var(--ink);
+      color: #fff;
+      padding: 56px 40px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg, transparent, transparent 24px,
+        rgba(192,57,43,0.07) 24px, rgba(192,57,43,0.07) 25px
+      );
+    }
+    .hero-avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 36px; font-weight: 900; color: #fff;
+      margin: 0 auto 20px;
+      position: relative; z-index: 1;
+      border: 3px solid rgba(255,255,255,0.18);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; letter-spacing: -1px;
+      position: relative; z-index: 1;
+    }
+    .hero p {
+      color: rgba(255,255,255,0.65);
+      font-size: 15px; margin-top: 8px;
+      letter-spacing: 1px;
+      position: relative; z-index: 1;
+    }
+
+    .social-bar {
+      display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 12px;
+      background: var(--accent);
+      padding: 18px 24px;
+    }
+    .social-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: #fff; text-decoration: none;
+      font-size: 14px; font-weight: 600; letter-spacing: 0.5px;
+      padding: 8px 20px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 4px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .social-link:hover { background: rgba(255,255,255,0.18); border-color: #fff; }
+
+    .container {
+      max-width: 780px; margin: 0 auto;
+      padding: 48px 24px 64px;
+      display: flex; flex-direction: column; gap: 36px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.19s; }
+    .card:nth-child(4) { animation-delay: 0.26s; }
+    .card:nth-child(5) { animation-delay: 0.33s; }
+    .card:nth-child(6) { animation-delay: 0.40s; }
+
+    .card-header {
+      background: var(--accent2); color: #fff;
+      padding: 13px 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700; letter-spacing: 0.3px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-body { padding: 22px 28px; }
+
+    .hobby-list {
+      display: flex; flex-wrap: wrap; gap: 10px; list-style: none;
+    }
+    .hobby-list li {
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 20px; padding: 6px 18px;
+      font-size: 15px; font-weight: 600; color: var(--accent2);
+      display: flex; align-items: center; gap: 7px;
+    }
+
+    .subject-list {
+      list-style: none; counter-reset: subj;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .subject-list li {
+      counter-increment: subj;
+      display: flex; align-items: center; gap: 14px;
+      font-size: 16px; font-weight: 500;
+    }
+    .subject-list li::before {
+      content: counter(subj);
+      background: var(--accent); color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 900;
+      width: 30px; height: 30px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-table { width: 100%; border-collapse: collapse; font-size: 15.5px; }
+    .info-table th, .info-table td {
+      border: 1.5px solid var(--border); padding: 11px 18px; text-align: left;
+    }
+    .info-table th {
+      background: var(--bg); font-weight: 700;
+      color: var(--accent2); width: 38%; letter-spacing: 0.3px;
+    }
+    .info-table tr:hover td { background: #faf8f4; }
+
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .connect-card {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 22px 16px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      text-decoration: none; color: var(--ink); background: var(--bg);
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .connect-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(192,57,43,0.13);
+    }
+    .c-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .c-linkedin { background: #0077b5; }
+    .c-github   { background: #1a1a2e; }
+    .c-discord  { background: #5865F2; }
+    .c-label { font-weight: 700; font-size: 15px; }
+    .c-handle { font-size: 13px; color: var(--muted); word-break: break-all; text-align: center; }
+
+    footer {
+      text-align: center; color: var(--muted); font-size: 13px;
+      padding: 24px; border-top: 1px solid var(--border);
+    }
+  </style>
 </head>
 <body>
-    <h1>My Personal Profile</h1>
-    <h2>About Me</h2>
-    <p>Hello! My name is Abdul Moiz Imran. I am a CSC101 student. I am learning HTML in my computer science lab.</p>
-    <h2>My Hobbies</h2>
-    <ul>
-        <li>Reading</li>
-        <li>Cricket</li>
-        <li>Gaming</li>
-        <li>Learning about computers</li>
-    </ul>
-    <h2>My Favorite Subjects</h2>
-    <ol>
+
+<div class="topbar">CSC101 &mdash; Computer Science Lab &mdash; Spring 2026</div>
+
+<div class="hero">
+  <div class="hero-avatar">AM</div>
+  <h1>Abdul Moiz Imran</h1>
+  <p>CSC101 Student &nbsp;|&nbsp; BS Electronics &amp; Computing &nbsp;|&nbsp; 1st Semester</p>
+</div>
+
+<div class="social-bar">
+  <a class="social-link" href="https://www.linkedin.com/in/abdul-moiz-imran-713205406" target="_blank" rel="noopener">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM3.56 20.45h3.57V9H3.56v11.45z"/></svg>
+    LinkedIn
+  </a>
+  <a class="social-link" href="https://github.com/CSC101-AbdulMoizImran-SP2026001/my-first-html-page" target="_blank" rel="noopener">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.8 8.2 11.38.6.1.83-.26.83-.57v-2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.08-.75.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.68.83.57C20.56 22.1 24 17.6 24 12.3 24 5.67 18.63.3 12 .3z"/></svg>
+    GitHub
+  </a>
+  <a class="social-link" href="https://discord.com/users/abdulmoizimran_cui" target="_blank" rel="noopener">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.37 3c-.22.4-.48.93-.65 1.35a18.4 18.4 0 0 0-5.44 0A13.3 13.3 0 0 0 8.62 3a19.7 19.7 0 0 0-4.96 1.37C1.18 8.65.54 12.84 1.07 16.97a19.9 19.9 0 0 0 6.07 3.07c.49-.67.93-1.38 1.3-2.13a12.9 12.9 0 0 1-2.05-.99c.17-.13.34-.26.5-.4a14.16 14.16 0 0 0 12.22 0c.16.14.33.27.5.4-.65.39-1.34.72-2.06.99.37.75.8 1.46 1.3 2.13a19.84 19.84 0 0 0 6.08-3.07c.61-4.85-.87-9-3.6-12.6zM8.52 14.44c-1.18 0-2.14-1.08-2.14-2.4 0-1.33.94-2.41 2.14-2.41 1.19 0 2.16 1.08 2.14 2.41 0 1.32-.95 2.4-2.14 2.4zm7.96 0c-1.18 0-2.14-1.08-2.14-2.4 0-1.33.94-2.41 2.14-2.41 1.19 0 2.16 1.08 2.14 2.41 0 1.32-.94 2.4-2.14 2.4z"/></svg>
+    Discord
+  </a>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-header"><span>👤</span> About Me</div>
+    <div class="card-body">
+      <p>Hello! My name is <strong>Abdul Moiz Imran</strong>. I am a CSC101 student. I am learning HTML in my computer science lab.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span>🎯</span> My Hobbies</div>
+    <div class="card-body">
+      <ul class="hobby-list">
+        <li>📖 Reading</li>
+        <li>🏏 Cricket</li>
+        <li>🎮 Gaming</li>
+        <li>💻 Learning about computers</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span>📚</span> My Favorite Subjects</div>
+    <div class="card-body">
+      <ol class="subject-list">
         <li>Computer Science</li>
         <li>Mathematics</li>
         <li>English</li>
-    </ol>
-    <h2>My Favorite Website</h2>
-    <p>
-        Visit my favorite website:
-        https://www.wikipedia.orgWikipedia</a>
-    <!-- LinkedIn -->
-<a href="https://www.linkedin.com/in/abdul-moiz-imran-713205406" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </ol>
+    </div>
+  </div>
 
-<!-- GitHub -->
-<a href="https://github.com/CSC101-AbdulMoizImran-SP2026001/my-first-html-page" target="_blank" rel="noopener noreferrer">GitHub</a>
-    </p>
-    <h2>My Picture</h2>
-    <img src="https://pern-my.sharepoint.com/:i:/g/personal/sp26-elc-001_isbstudent_comsats_edu_pk/IQAQqEFPXLNNR6K_PCUI9bYHAVoUtIHNeCu4d8mAsUx0E60?e=dFeodv" alt="My Photo" width="200">
-    
-    <h2>My Academic Information</h2>
-    <table border="1">
-        <tr>
-            <th>Field</th>
-            <th>Information</th>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>Ahmed Ali</td>
-        </tr>
-        <tr>
-            <td>Course</td>
-            <td>CSC101</td>
-        </tr>
-        <tr>
-            <td>Program</td>
-            <td>BS Electronics and computing</td>
-        </tr>
-        <tr>
-            <td>Semester</td>
-            <td>1st Semester</td>
-        </tr>
-    </table>
+  <div class="card">
+    <div class="card-header"><span>🎓</span> My Academic Information</div>
+    <div class="card-body">
+      <table class="info-table">
+        <thead>
+          <tr><th>Field</th><th>Information</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Name</td><td>Ahmed Ali</td></tr>
+          <tr><td>Course</td><td>CSC101</td></tr>
+          <tr><td>Program</td><td>BS Electronics and Computing</td></tr>
+          <tr><td>Semester</td><td>1st Semester</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span>🌐</span> My Favorite Website</div>
+    <div class="card-body">
+      <p>Visit my favorite website: <a href="https://www.wikipedia.org" target="_blank" rel="noopener" style="color:#2c3e7a;font-weight:600;">Wikipedia</a></p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span>🔗</span> Connect with Me</div>
+    <div class="card-body">
+      <div class="connect-grid">
+
+        <a class="connect-card" href="https://www.linkedin.com/in/abdul-moiz-imran-713205406" target="_blank" rel="noopener">
+          <div class="c-icon c-linkedin">
+            <svg width="26" height="26" fill="#fff" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM3.56 20.45h3.57V9H3.56v11.45z"/></svg>
+          </div>
+          <span class="c-label">LinkedIn</span>
+          <span class="c-handle">Abdul Moiz Imran</span>
+        </a>
+
+        <a class="connect-card" href="https://github.com/CSC101-AbdulMoizImran-SP2026001/my-first-html-page" target="_blank" rel="noopener">
+          <div class="c-icon c-github">
+            <svg width="26" height="26" fill="#fff" viewBox="0 0 24 24"><path d="M12 .3C5.37.3 0 5.67 0 12.3c0 5.3 3.44 9.8 8.2 11.38.6.1.83-.26.83-.57v-2c-3.34.73-4.04-1.6-4.04-1.6-.55-1.4-1.34-1.77-1.34-1.77-1.08-.75.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.3.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.92 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.82 1.1.82 2.22v3.29c0 .32.22.68.83.57C20.56 22.1 24 17.6 24 12.3 24 5.67 18.63.3 12 .3z"/></svg>
+          </div>
+          <span class="c-label">GitHub</span>
+          <span class="c-handle">CSC101-AbdulMoizImran</span>
+        </a>
+
+        <a class="connect-card" href="https://discord.com/users/abdulmoizimran_cui" target="_blank" rel="noopener">
+          <div class="c-icon c-discord">
+            <svg width="26" height="26" fill="#fff" viewBox="0 0 24 24"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.37 3c-.22.4-.48.93-.65 1.35a18.4 18.4 0 0 0-5.44 0A13.3 13.3 0 0 0 8.62 3a19.7 19.7 0 0 0-4.96 1.37C1.18 8.65.54 12.84 1.07 16.97a19.9 19.9 0 0 0 6.07 3.07c.49-.67.93-1.38 1.3-2.13a12.9 12.9 0 0 1-2.05-.99c.17-.13.34-.26.5-.4a14.16 14.16 0 0 0 12.22 0c.16.14.33.27.5.4-.65.39-1.34.72-2.06.99.37.75.8 1.46 1.3 2.13a19.84 19.84 0 0 0 6.08-3.07c.61-4.85-.87-9-3.6-12.6zM8.52 14.44c-1.18 0-2.14-1.08-2.14-2.4 0-1.33.94-2.41 2.14-2.41 1.19 0 2.16 1.08 2.14 2.41 0 1.32-.95 2.4-2.14 2.4zm7.96 0c-1.18 0-2.14-1.08-2.14-2.4 0-1.33.94-2.41 2.14-2.41 1.19 0 2.16 1.08 2.14 2.41 0 1.32-.94 2.4-2.14 2.4z"/></svg>
+          </div>
+          <span class="c-label">Discord</span>
+          <span class="c-handle">abdulmoizimran_cui</span>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2026 Abdul Moiz Imran &mdash; CSC101, BS Electronics &amp; Computing
+</footer>
+
 </body>
 </html>
